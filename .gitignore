@@ -1,0 +1,7 @@
+*.class
+References
+node_modules
+.idea
+*.log
+*.info
+*.mp4
