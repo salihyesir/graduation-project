@@ -11,6 +11,7 @@ var init = function () {
 				port: process.env.dbPort,
 				name: process.env.dbName
 			},
+			jwtSecret: process.env.jwtSecret,
 			sessionSecret: process.env.sessionSecret,
 			facebook: {
 				clientID: process.env.facebookClientID,

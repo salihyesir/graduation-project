@@ -13,9 +13,16 @@
     "url": "git+https://github.com/salihyesir/graduation-project.git"
   },
   "keywords": [
-    "nodejs","express","passport",
-    "mongodb","redis","mongoose",
-    "realtime","webrtc","socket.io","easyrtc"
+    "nodejs",
+    "express",
+    "passport",
+    "mongodb",
+    "redis",
+    "mongoose",
+    "realtime",
+    "webrtc",
+    "socket.io",
+    "easyrtc"
   ],
   "author": "Salih YESİR",
   "license": "MIT",
@@ -36,6 +43,7 @@
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth": "^1.0.0",
+    "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "redis": "^2.8.0",

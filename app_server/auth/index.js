@@ -6,6 +6,8 @@ var LocalStrategy 		= require('passport-local').Strategy;
 var FacebookStrategy  	= require('passport-facebook').Strategy;
 var TwitterStrategy  	= require('passport-twitter').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const JwtStrategy = require('passport-jwt').Strategy;
+const { ExtractJwt } = require('passport-jwt');
 
 var User = require('../models/user');
 
@@ -26,6 +28,28 @@ var init = function(){
 			done(err, user);
 		});
 	});
+
+
+	passport.use(new JwtStrategy({
+		jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+		secretOrKey: config.jwtSecret
+	}, function (payload, done)  {
+		try {
+			// Find the user specified in token
+			const user =  User.findById(payload.sub);
+	
+			// If user doesn't exists, handle it
+			if (!user) {
+				return done(null, false);
+			}
+	
+			// Otherwise, return the user
+			done(null, user);
+		} catch(error) {
+			done(error, false);
+		}
+	}));
+
 
 	// Plug-in Local Strategy
 	passport.use(new LocalStrategy(
