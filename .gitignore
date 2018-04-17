@@ -1,6 +1,7 @@
 *.class
 References
 node_modules
+config.json
 .idea
 *.log
 *.info

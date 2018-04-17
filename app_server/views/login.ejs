@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Day 001 Login Form</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/public/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel='stylesheet prefetch' href="/public/libs/font-awesome/css/googleapiLogin.css">
+<!--
+
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:600'>
+-->
+    <link rel="stylesheet" href="/public/css/LoginStyle.css">
+	<!-- Bootstrap cdn testi için gerekli -->
+    <div id="bootstrapCssTest" class="hidden"></div>
+ 
+</head>
+
+<body>
+<div class="login-wrap" style="float:left;">
+    <div class="login-html">
+    <div class="social-buttons">
+          <a href="/auth/google">
+            <img class="loginBtn" src="public/img/googleLoginBtn.png" width="300"  alt="Sign-In with Google">
+          </a>
+          <a href="/auth/facebook">
+            <img class="loginBtn" src="public/img/facebookLoginBtn.png" width="300"  alt="Sign-In with Facebook">
+          </a>
+
+          <a href="/auth/twitter">
+            <img class="loginBtn" src="public/img/twitterLoginBtn.png" width="300"  alt="Sign-In with Twitter">
+          </a>
+        </div>
+        <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">OTURUM AÇ</label>
+        <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">ÜYE OL</label>
+        <div class="login-form">
+            <div class="sign-in-htm">
+                <form action="/login" method="post">
+                    <div class="group">
+                        <label for="username" class="label">Kullanıcı Adı</label>
+                        <input name ="username" type="text" class="input" required>
+                    </div>
+                    <div class="group">
+                        <label for="password" class="label">Parola</label>
+                        <input name="password" type="password" class="input" data-type="password" required>
+                    </div>
+                    <div class="group">
+                        <input id="check" type="checkbox" class="check" checked>
+                        <label for="check"><span class="icon"></span> Beni Hatırla</label>
+                    </div>
+                    <div class="group">
+                        <input type="submit" class="button" value="OTURUM AÇ">
+                    </div>
+                </form>    
+                <div class="hr"></div>
+                <div class="foot-lnk">
+                    <a href="#forgot">Parolamı Unuttum?</a>
+                </div>
+            </div>
+            <div class="sign-up-htm">
+                <form action="/register" method="post">
+                    <div class="group">
+                        <label for="email" class="label">E-Posta</label>
+                        <input id="email"  name ="email" type="text" class="input" required>
+                    </div>
+                    <div class="group">
+                        <label for="userName" class="label">Kullanıcı Adı</label>
+                        <input id="userName" name="userName" type="text" class="input" required>
+                    </div>
+                        <div class="group">
+                        <label for="password" class="label">Parola</label>
+                        <input id="password" type="password" name="password" class="input" data-type="password" required>
+                    </div>
+                    <div class="group">
+                        <label for="passwordConf" class="label">Parola Tekrar</label>
+                        <input id="passwordConf"  type="password"  name="passwordConf" class="input"  data-type="password" required>
+                    </div>
+                    <div class="group">
+                        <input type="submit" class="button" value="ÜYE OL">
+                    </div>
+                </form>
+                <div class="hr"></div>
+                <div class="foot-lnk">
+                    <label for="tab-1">Zaten Üyeyim?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="RandomChat">
+		<a href="/chat/random"><button class="button" style="vertical-align:middle;"><span>Random Chat! </span></button></a>
+</div>
+
+<script>
+	var n = 0;
+	setInterval(function(){ 
+		myFunction(n);
+		$('.RandomChat').css('transition', 'background-image 1.5s ease');
+		n++;
+		if(n>3)
+		{
+			n = 0;
+		}
+	}, 3000);
+	
+	function myFunction(n) {
+		if(n == 0)
+		{
+			$('.RandomChat').css('background-image', 'url("public/img/maxresdefault.jpg")');
+		}
+		if(n == 1)
+		{
+			$('.RandomChat').css('background-image', 'url("public/img/chat1.png")');
+		}
+		if(n == 2)
+		{
+			$('.RandomChat').css('background-image', 'url("public/img/asdf.png")');
+		}
+		if(n == 3)
+		{
+			$('.RandomChat').css('background-image', 'url("public/img/qwert.png")');
+		}
+	}
+</script>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+ 
+<!-- Üsteki css cdn çöktüyse bootstrap burada ekliyorum.Sayfa max 1 sn geçikme ile responsive olacak. 
+        bu da cdn linklerini kontrol etmem gerektiğini anlamam için. Yani css burada kasıtlı olarak ekliyorum.  -->
+    <script type="text/javascript">
+        if ($('#bootstrapCssTest').is(':visible') === true) {
+            $('<link href="/public/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />').appendTo('head');
+            window.Bootstrap || document.write('<script src="/public/libs/bootstrap/js/bootstrap.min.js"><\/script>')
+        }
+    </script>
+</body>
+</html>
