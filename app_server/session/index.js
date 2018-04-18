@@ -21,10 +21,15 @@ var init = function () {
 		});
 	} else {
 		return session({
-			secret: config.sessionSecret,
+			/*secret: config.sessionSecret,
 			resave: false,
 			unset: 'destroy',
-			saveUninitialized: true
+			saveUninitialized: true*/
+			secret: config.sessionSecret,
+			resave: true,//Yeniden kayıt db ye kayıt edildiğinden true olmalı
+			saveUninitialized: true,
+			unset: 'destroy',
+			store: new MongoStore({ mongooseConnection: db.Mongoose.connection })
 		});
 	}
 }

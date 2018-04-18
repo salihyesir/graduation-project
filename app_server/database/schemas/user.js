@@ -1,5 +1,3 @@
-'use strict';
-
 var Mongoose 	= require('mongoose');
 var bcrypt      = require('bcrypt-nodejs');
 

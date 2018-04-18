@@ -94,6 +94,14 @@ router.get('/profile', [User.isAuthenticated, function(req, res, next) {
 	});*/
 }]);
 
+router.get('/random', function(req, res, next) {
+	res.render('random');
+	/*Room.find(function(err, rooms){
+		if(err) throw err;
+		res.render('profile', { rooms });
+	});*/
+});
+
 // Chat Room 
 router.get('/chat/:id', [User.isAuthenticated, function(req, res, next) {
 	var roomId = req.params.id;

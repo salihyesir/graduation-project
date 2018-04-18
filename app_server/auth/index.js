@@ -6,8 +6,9 @@ var LocalStrategy 		= require('passport-local').Strategy;
 var FacebookStrategy  	= require('passport-facebook').Strategy;
 var TwitterStrategy  	= require('passport-twitter').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const JwtStrategy = require('passport-jwt').Strategy;
-const { ExtractJwt } = require('passport-jwt');
+//For token 
+//const JwtStrategy = require('passport-jwt').Strategy;
+//const { ExtractJwt } = require('passport-jwt');
 
 var User = require('../models/user');
 
@@ -29,7 +30,7 @@ var init = function(){
 		});
 	});
 
-
+/*
 	passport.use(new JwtStrategy({
 		jwtFromRequest: ExtractJwt.fromHeader('authorization'),
 		secretOrKey: config.jwtSecret
@@ -49,7 +50,7 @@ var init = function(){
 			done(error, false);
 		}
 	}));
-
+*/
 
 	// Plug-in Local Strategy
 	passport.use(new LocalStrategy(
