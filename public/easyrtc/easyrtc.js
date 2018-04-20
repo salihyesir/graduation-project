@@ -8178,6 +8178,7 @@ var Easyrtc = function() {
         }
         else if (!self.webSocket) {
             try {
+                // self.webSocket = io.connect('https://localhost:8443/random', connectionOptions);
                self.webSocket = io.connect(serverPath, connectionOptions);
 
                 if (!self.webSocket) {
