@@ -101,6 +101,13 @@ router.get('/random', function(req, res, next) {
 		res.render('profile', { rooms });
 	});*/
 });
+router.get('/web', function(req, res, next) {
+	res.render('web');
+	/*Room.find(function(err, rooms){
+		if(err) throw err;
+		res.render('profile', { rooms });
+	});*/
+});
 
 // Chat Room 
 router.get('/chat/:id', [User.isAuthenticated, function(req, res, next) {

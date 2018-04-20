@@ -87,6 +87,7 @@ var ioEvents = function(io,easyrtc){
 
 
 }
+
         
 
 var init = function(app){
@@ -114,7 +115,6 @@ fs= require("fs");//File system core modules
 
     // Define all Events
     ioEvents(io,easyrtc);
-    
     return webServer;
 }
 module.exports = init;

@@ -1,0 +1,59 @@
+.contactPaneDiv, .contactIcon {
+	height: 64px;
+}
+.contactPaneDiv {
+    box-shadow: -1px 1px 3px 0px #a0a0a0;
+    margin: 10px 0px;
+
+	overflow: hidden;
+}
+.contactTextDiv {
+    margin-left: 10px;
+    position: relative;
+    top: -30px;
+}
+.webix_list_item{
+	border:none;
+}
+.webix_list .webix_list_item.webix_selected{
+	background:transparent;
+}
+.webix_list .webix_list_item.webix_selected div{
+	background: #27ae60;
+}
+
+.absarea{
+	position: relative;
+}
+.mirrorDiv, #mirrorVideo {
+	width: 320px;
+	height: 240px;
+}
+.mirrorDiv {
+	background-color: #EEEEEE;
+	position: absolute; 
+	top: 250px; right: 20px; z-index:2;
+	border: 1px solid silver;
+	box-shadow: -1px 1px 3px 0px #a0a0a0;
+}
+
+.status div{
+	text-align: right;
+}
+ 
+.windowToUniverseDiv {
+	width:640px; height: 480px; 
+	position: absolute; 
+	top: 20px; left: 20px;
+	background: #DDD;
+	border: 1px solid silver;
+}
+#windowToUniverse {
+	width: 640px;
+	height: 480px;
+}
+
+.error {
+	color: red;
+	text-weight: bold;
+}
