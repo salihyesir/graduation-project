@@ -11,7 +11,7 @@ var express = require('express'),
 var routes 		= require('./app_server/routes'),
     session 	= require('./app_server/session'),
     passport    = require('./app_server/auth'),
-    ioServer 	= require('./app_server/socket')(app),
+    ioServer 	= require('./app_server/rtc')(app),
     logger 		= require('./app_server/logger');
 
 //webrtc franework 
