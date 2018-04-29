@@ -37,7 +37,6 @@ router.post('/register', function(req, res, next) {
 		req.flash('showRegisterForm', true);
 		res.redirect('/');
 	}else{
-
 		// Check if the username already exists for non-social account
 		User.findOne({'username': new RegExp('^' + req.body.username + '$', 'i'), 'socialId': null}, function(err, user){
 			if(err) throw err;
@@ -65,6 +64,7 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
 		failureFlash: true
 }));
 
+// 3. Login via Google
 router.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
 
@@ -87,26 +87,24 @@ router.get('/auth/twitter/callback', passport.authenticate('twitter', {
 
 // profile
 router.get('/profile', [User.isAuthenticated, function(req, res, next) {
-	res.render('profile');
-	/*Room.find(function(err, rooms){
-		if(err) throw err;
-		res.render('profile', { rooms });
-	});*/
+	console.log(req.user);
+	res.render('profile', { user: req.user });
 }]);
 
 router.get('/random', function(req, res, next) {
 	res.render('random');
-	/*Room.find(function(err, rooms){
-		if(err) throw err;
-		res.render('profile', { rooms });
-	});*/
 });
 router.get('/web', function(req, res, next) {
-	res.render('web');
-	/*Room.find(function(err, rooms){
+	var userId = req.user._id;
+	User.findById(userId, function(err, inf){
 		if(err) throw err;
-		res.render('profile', { rooms });
-	});*/
+		if(!inf){
+			return next(); 
+		}
+		
+		res.render('web', { user: inf });
+	});
+	
 });
 
 // Chat Room 

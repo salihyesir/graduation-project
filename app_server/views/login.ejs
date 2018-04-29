@@ -5,9 +5,11 @@
     <title>Day 001 Login Form</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/public/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+
     <link rel='stylesheet prefetch' href="/public/libs/font-awesome/css/googleapiLogin.css">
+    <link rel='stylesheet prefetch' href="/public/libs/font-awesome/css/bootstrap-social.css">
+    <link rel='stylesheet prefetch' href="/public/libs/scss/button.scss">
 <!--
 
     <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:600'>
@@ -21,30 +23,16 @@
 <body>
 <div class="login-wrap" style="float:left;">
     <div class="login-html">
-    <div class="social-buttons">
-          <a href="/auth/google">
-            <img class="loginBtn" src="public/img/googleLoginBtn.png" width="300"  alt="Sign-In with Google">
-          </a>
-          <a href="/auth/facebook">
-            <img class="loginBtn" src="public/img/facebookLoginBtn.png" width="300"  alt="Sign-In with Facebook">
-          </a>
-
-          <a href="/auth/twitter">
-            <img class="loginBtn" src="public/img/twitterLoginBtn.png" width="300"  alt="Sign-In with Twitter">
-          </a>
-        </div>
         <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">OTURUM AÇ</label>
         <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">ÜYE OL</label>
         <div class="login-form">
             <div class="sign-in-htm">
                 <form action="/login" method="post">
                     <div class="group">
-                        <label for="username" class="label">Kullanıcı Adı</label>
-                        <input name ="username" type="text" class="input" required>
+                        <input name ="username" type="text" class="input" required placeholder="Kulllanıcı Adı">
                     </div>
                     <div class="group">
-                        <label for="password" class="label">Parola</label>
-                        <input name="password" type="password" class="input" data-type="password" required>
+                        <input name="password" type="password" class="input" data-type="password" required placeholder="Parola">
                     </div>
                     <div class="group">
                         <input id="check" type="checkbox" class="check" checked>
@@ -54,9 +42,20 @@
                         <input type="submit" class="button" value="OTURUM AÇ">
                     </div>
                 </form>    
-                <div class="hr"></div>
+                <div class="hr" style="margin: 20px;"></div>
                 <div class="foot-lnk">
-                    <a href="#forgot">Parolamı Unuttum?</a>
+                        <a href="/auth/google" class="btn btn-block btn-social btn-google">
+                            <span class="fab fa-google" style="color: #fff;"></span>
+                            Google Hesabınla Giriş Yap
+                          </a>
+                        <a href="/auth/facebook" class="btn btn-block btn-social btn-facebook">
+                            <span class="fab fa-facebook" style="color: #fff;"></span>
+                            Facebook Hesabınla Giriş Yap
+                          </a>
+                        <a href="/auth/twitter" class="btn btn-block btn-social btn-twitter">
+                                <span class="fab fa-twitter" style="color: #fff;"></span>
+                                Twitter Hesabınla Giriş Yap
+                        </a>
                 </div>
             </div>
             <div class="sign-up-htm">
@@ -81,11 +80,9 @@
         </div>
     </div>
 </div>
-
-
 <div class="RandomChat">
 		<a href="/random"><button class="button" style="vertical-align:middle;"><span>Random Chat! </span></button></a>
-</div>
+    </div>
 
 <script>
 	var n = 0;

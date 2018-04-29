@@ -1,9 +1,14 @@
 var config = {
 	server:"/",
+	
+	app:function(username, picture){
+		config.name=username;
+		console.log(picture);
+	},
+
 	users:function(room, people, me){
 		var list = $$("contactsList");
 		list.clearAll();
-
 		if (config.name)
 			list.add({ 
 				id:-1, 
@@ -44,14 +49,6 @@ var chat = {
 	template:`<div class='mirrorDiv'><video id='mirrorVideo' width></div>
 				<div class='windowToUniverseDiv'><video id='windowToUniverse'></div>`
 };
-
-
-function funnyName(){
-	var first = ["Agile", "Strong", "Tricky", "Shiny", "Gloom"];
-	var second = ["Tree", "Cat", "Boss", "User", "Rabbit"];
-
-	return first[Math.floor(Math.random()*first.length)] + " " + second[Math.floor(Math.random()*second.length)];
-}
 
 function doConnect(config) {
 	easyrtc.setVideoDims(640,480);
@@ -122,13 +119,12 @@ function doCall(easyrtcid) {
 	);
 }
 
-
 webix.ready(function(){
 
 	webix.ui({
 		rows : [
 			{ view:"toolbar", cols:[
-				{ view:"label", label : "Webix WebRTC Chat" },
+				{ view:"label", label : "WebRTC Chat" },
 				{},
 				{ view:"label", id:"status", css:"status", value:"", width: 200 },
 				{ view:"button", id:"endcall", value:"End Call", width: 100, click:function(){
@@ -145,26 +141,6 @@ webix.ready(function(){
 		]
 	});
 
-	var win = webix.ui ({
-		view: "window", position:"top", head:false, modal:true,
-		body: {
-			view:"form", rows:[
-				{ view:"text", name:"name", label:"Your name", value:funnyName() },
-				{ view:"button", value:"Start!", click:function(){
-					var name = this.getFormView().getValues().name;
-					if (!easyrtc.isNameValid (name))
-						webix.message({ type:"error", text:"Invalid name" });
-					else {
-						this.getTopParentView().hide();
-						config.name = name;
-						doConnect(config);
-					}
-				}}
-			]
-		}
-	});
+	doConnect(config);
 
-	win.show();
-	var input = win.getBody().elements.name.getInputNode();
-	input.select(); input.focus();
 });
