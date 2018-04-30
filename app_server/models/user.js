@@ -5,12 +5,19 @@ var create = function (data, callback){
 	newUser.save(callback);
 };
 
+var find = function (data, callback){
+	userModel.find(data, callback);
+}
+
 var findOne = function (data, callback){
 	userModel.findOne(data, callback);
 }
 
 var findById = function (id, callback){
 	userModel.findById(id, callback);
+}
+var findOneAndUpdate = function ( data, query , callback){
+	userModel.findOneAndUpdate( {_id : data}, query, callback);
 }
 
 
@@ -58,9 +65,11 @@ var isAuthenticated = function (req, res, next) {
 }
 
 module.exports = { 
-	create, 
+	create,
+	find, 
 	findOne, 
 	findById, 
 	findOrCreate, 
+	findOneAndUpdate,
 	isAuthenticated 
 };

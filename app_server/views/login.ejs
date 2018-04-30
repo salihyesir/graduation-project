@@ -29,7 +29,7 @@
             <div class="sign-in-htm">
                 <form action="/login" method="post">
                     <div class="group">
-                        <input name ="username" type="text" class="input" required placeholder="Kulllanıcı Adı">
+                        <input name ="username" type="text" class="input" required placeholder="Kullanıcı Adı">
                     </div>
                     <div class="group">
                         <input name="password" type="password" class="input" data-type="password" required placeholder="Parola">
@@ -41,6 +41,13 @@
                     <div class="group">
                         <input type="submit" class="button" value="OTURUM AÇ">
                     </div>
+                    <% if (errors != null && showRegisterForm == null) { %>
+                        <% errors.forEach(function(err){ %>
+                            <p class="message error"><%= err %></p>
+                        <% }); %>
+                    <% } if (success != null && showRegisterForm == null) { %>
+                        <p class="message success"><%= success %></p>
+                    <% } %>
                 </form>    
                 <div class="hr" style="margin: 20px;"></div>
                 <div class="foot-lnk">
@@ -61,6 +68,10 @@
             <div class="sign-up-htm">
                 <form action="/register" method="post">
                     <div class="group">
+                        <label for="name" class="label">Adı ve Soyadı</label>
+                        <input id="name" name="name" type="text" class="input" required>
+                    </div>
+                    <div class="group">
                         <label for="username" class="label">Kullanıcı Adı</label>
                         <input id="username" name="username" type="text" class="input" required>
                     </div>
@@ -71,6 +82,11 @@
                     <div class="group">
                         <input type="submit" class="button" value="ÜYE OL">
                     </div>
+                     <% if (errors != null && showRegisterForm != null && showRegisterForm === true) { %>
+                        <% errors.forEach(function(err){ %>
+                        <p class="message error"><%= err %></p>
+                        <% }); %>
+                    <% } %>
                 </form>
                 <div class="hr"></div>
                 <div class="foot-lnk">

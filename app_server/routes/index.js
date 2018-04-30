@@ -29,10 +29,10 @@ router.post('/login', passport.authenticate('local', {
 
 // Register via username and password
 router.post('/register', function(req, res, next) {
+	var credentials = {'name' : req.body.name ,'username': req.body.username, 'password': req.body.password };
 
-	var credentials = {'username': req.body.username, 'password': req.body.password };
-
-	if(credentials.username === '' || credentials.password === ''){
+	if( credentials.username === '' || credentials.password === '', credentials.name ==='' ){
+		console.log('error Missing credentials');
 		req.flash('error', 'Missing credentials');
 		req.flash('showRegisterForm', true);
 		res.redirect('/');
@@ -41,12 +41,14 @@ router.post('/register', function(req, res, next) {
 		User.findOne({'username': new RegExp('^' + req.body.username + '$', 'i'), 'socialId': null}, function(err, user){
 			if(err) throw err;
 			if(user){
+				console.log('Username already exists.');
 				req.flash('error', 'Username already exists.');
 				req.flash('showRegisterForm', true);
 				res.redirect('/');
 			}else{
 				User.create(credentials, function(err, newUser){
 					if(err) throw err;
+					console.log('Your account has been created. Please log in');
 					req.flash('success', 'Your account has been created. Please log in.');
 					res.redirect('/');
 				});
@@ -87,25 +89,47 @@ router.get('/auth/twitter/callback', passport.authenticate('twitter', {
 
 // profile
 router.get('/profile', [User.isAuthenticated, function(req, res, next) {
-	console.log(req.user);
+
 	res.render('profile', { user: req.user });
 }]);
+
+
+router.post('/adduser', function(req, res, next) {
+	var adduser = req.body.adduser;
+	//User Control
+	User.find({username:adduser},function (err, result) {
+		if(err) throw err;
+		if(result.length === 0){
+			req.flash('error', 'User not found.');
+		}
+		else if(req.user.directory.indexOf(adduser) > -1){
+			req.flash('error', 'User already exist.');
+		}
+		else{
+			var query = {$push: { directory:  adduser } }; 
+			User.findOneAndUpdate(req.user._id, query ,function (err,docs) {
+				if(err) throw err;
+				//console.log(docs);
+			});
+		}	
+	});
+	res.redirect('/');
+});
 
 router.get('/random', function(req, res, next) {
 	res.render('random');
 });
-router.get('/web', function(req, res, next) {
+router.get('/web',[User.isAuthenticated, function(req, res, next) {
 	var userId = req.user._id;
 	User.findById(userId, function(err, inf){
 		if(err) throw err;
 		if(!inf){
 			return next(); 
 		}
-		
 		res.render('web', { user: inf });
 	});
 	
-});
+}]);
 
 // Chat Room 
 router.get('/chat/:id', [User.isAuthenticated, function(req, res, next) {

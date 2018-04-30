@@ -1,18 +1,20 @@
 var config = {
 	server:"/",
 	
-	app:function(username, picture){
+	app:function(username, picture, directory ){
 		config.name=username;
-		console.log(picture);
+		config.picture = picture;
+		config.directory= directory;
 	},
 
 	users:function(room, people, me){
+		console.log(config.directory);
 		var list = $$("contactsList");
 		list.clearAll();
 		if (config.name)
 			list.add({ 
 				id:-1, 
-				img:"/public/img/avatar/index.jpg", 
+				img: config.picture, 
 				title: config.name + " ( this is Me )" });
 
 		for (var key in people){
@@ -140,7 +142,6 @@ webix.ready(function(){
 			]}
 		]
 	});
-
 	doConnect(config);
 
 });

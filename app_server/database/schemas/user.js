@@ -15,12 +15,13 @@ const DEFAULT_USER_PICTURE = "/img/user.jpg";
  */
 var Schema = Mongoose.Schema;
 var UserSchema = new Mongoose.Schema({
-    username: { type: String, required: true},
+    name: { type: String, required: true},
+    username:{ type: String, required: true, unique: true},
     password: { type: String, default: null },
     socialId: { type: String, default: null },
     picture:  { type: String, default:  DEFAULT_USER_PICTURE},
     isDeleted: { type:Boolean, required:true , default:false},
-    directory:[Schema.Types.ObjectId]
+    directory:[ String ]
 });
 
 /**
