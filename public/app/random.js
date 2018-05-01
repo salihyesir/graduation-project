@@ -58,18 +58,30 @@
   // get the partner video stream - triggered on sucessful call
   easyrtc.setStreamAcceptor( function(callerId, stream) {
     var video = document.getElementById('partnerVideo');
+    video.volume = 0.4;
     easyrtc.setVideoObjectSrc(video,stream);
   });
   
   // stop to receive the partner video stream - triggered on hangup call
   easyrtc.setOnStreamClosed( function (callerId) {
     var video = document.getElementById('partnerVideo');
+    video.volume = 0.4;
     easyrtc.setVideoObjectSrc(video, '');
   });
+
+
 
   
   function connect() {
     //easyrtc.enableDebug(true);
+
+    // if (navigator.userAgent.match(/android/i)) {
+    //   var remote_filter= easyrtc.buildRemoteSdpFilter({audioSendCodec: 'ISAC/16000'});
+    //   log(remote_filter);
+    //   var local_filter= easyrtc.buildLocalSdpFilter({audioRecvCodec: 'opus/48000/2'});
+    //   log(local_filter);
+    //   easyrtc.setSdpFilters(local_filter,remote_filter);
+    // }
 
     easyrtc.setUsername(self.username);
     easyrtc.initMediaSource(
@@ -77,6 +89,7 @@
       function() {
         // set the user own video
         var selfVideo = document.getElementById('selfVideo');
+        selfVideo.volume = 0.0;
         easyrtc.setVideoObjectSrc(selfVideo, easyrtc.getLocalStream());
       },
       // failure callback

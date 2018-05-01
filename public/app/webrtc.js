@@ -8,9 +8,6 @@ var config = {
 		config.directory= directory;
 	},
 	users:function(room, people, me){
-		console.log(people);
-		console.log('------------');
-		console.log(me);
 		var list = $$("contactsList");
 		list.clearAll();
 		if (config.name)

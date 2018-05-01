@@ -1,4 +1,3 @@
-/*
 var winston = require('winston');
 
 var logger = new (winston.Logger)({
@@ -18,4 +17,4 @@ var logger = new (winston.Logger)({
 	exitOnError: false
 });
 
-module.exports = logger;*/
+module.exports = logger;

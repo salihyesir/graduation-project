@@ -66,6 +66,14 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
 		failureFlash: true
 }));
 
+// 2. Login via Twitter
+router.get('/auth/twitter', passport.authenticate('twitter'));
+router.get('/auth/twitter/callback', passport.authenticate('twitter', {
+		successRedirect: '/profile',
+		failureRedirect: '/',
+		failureFlash: true
+}));
+
 // 3. Login via Google
 router.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
@@ -79,13 +87,7 @@ router.get('/auth/google',
 
 
 
-// 2. Login via Twitter
-router.get('/auth/twitter', passport.authenticate('twitter'));
-router.get('/auth/twitter/callback', passport.authenticate('twitter', {
-		successRedirect: '/profile',
-		failureRedirect: '/',
-		failureFlash: true
-}));
+
 
 // profile
 router.get('/profile', [User.isAuthenticated, function(req, res, next) {
