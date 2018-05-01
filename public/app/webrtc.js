@@ -15,16 +15,17 @@ var config = {
 				id:-1, 
 				img: config.picture, 
 				title: config.name + " ( this is Me )" });
-
+		console.log(config.directory);
 		for (var key in people){
 			var v = people[key];
-			
-			if(config.directory.indexOf(v.username) > -1 )
-			list.add ({
-				id: v.easyrtcid,
-				img: "/public/img/avatar/man.png",
-				title: v.username
-			});
+			if(config.directory.indexOf(v.username) > -1 ){
+				console.log(config.directory.indexOf(v.username));
+				list.add ({
+					id: v.easyrtcid,
+					img: "/public/img/avatar/man.png",
+					title: v.username
+				});
+			}
 		}
 	}
 };
@@ -69,8 +70,9 @@ function doConnect(config) {
 		if(code === "ALREADY_CONNECTED") text += ". You are already connected";
 
 		webix.message({ type:"error", text: text});
+		
 	});
-
+	
 	easyrtc.setPeerClosedListener(function(){
 		if ($$("endcall").isVisible()){
 			$$("endcall").hide();
@@ -100,7 +102,8 @@ function doConnect(config) {
 
 function doCall(easyrtcid) {
 	if (easyrtcid < 0) return false;
-
+	// Arama yapıldığında kendi sesimi kısıyorum. kendi pcmde test ederken yankı yapıyor.
+	
 	$$("status").setValue("Connecting...")
 	easyrtc.call(
 		easyrtcid,

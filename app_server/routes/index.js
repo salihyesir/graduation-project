@@ -3,13 +3,12 @@ var router 		= express.Router();
 var passport 	= require('passport');
 
 var User = require('../models/user');
-//var Room = require('../models/room');
 
 // Home page
 router.get('/', function(req, res, next) {
 	// If user is already logged in, then redirect to rooms page
 	if(req.isAuthenticated()){
-		res.redirect('/profile');
+		res.redirect('/profile', { user : req.user} );
 	}
 	else{
 		res.render('login', {
@@ -85,16 +84,11 @@ router.get('/auth/google',
 		failureFlash: true
 }));
 
-
-
-
-
 // profile
 router.get('/profile', [User.isAuthenticated, function(req, res, next) {
 
 	res.render('profile', { user: req.user });
 }]);
-
 
 router.post('/adduser', function(req, res, next) {
 	var adduser = req.body.adduser;
@@ -121,6 +115,7 @@ router.post('/adduser', function(req, res, next) {
 router.get('/random', function(req, res, next) {
 	res.render('random');
 });
+
 router.get('/web',[User.isAuthenticated, function(req, res, next) {
 	var userId = req.user._id;
 	User.findById(userId, function(err, inf){
@@ -133,29 +128,13 @@ router.get('/web',[User.isAuthenticated, function(req, res, next) {
 	
 }]);
 
-// Chat Room 
-router.get('/chat/:id', [User.isAuthenticated, function(req, res, next) {
-	var roomId = req.params.id;
-	Room.findById(roomId, function(err, room){
-		if(err) throw err;
-		if(!room){
-			return next(); 
-		}
-		res.render('chatroom', { user: req.user, room: room });
-	});
-	
-}]);
-
 // Logout
 router.get('/logout', function(req, res, next) {
 	// remove the req.user property and clear the login session
 	req.logout();
-
 	// destroy session data
 	req.session = null;
-
 	// redirect to homepage
 	res.redirect('/');
 });
-
 module.exports = router;

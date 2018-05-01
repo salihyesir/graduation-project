@@ -2,20 +2,13 @@
 <html lang="tr">
 
 <head>
-  <!--
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!- - <link rel="shortcut icon" href="../../assets/ico/favicon.png"> - ->
--->
+
   <title>WebRTC</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
-
-    
   
     <!-- Bootstrap cdn testi için gerekli -->
     <div id="bootstrapCssTest" class="hidden"></div>
@@ -25,11 +18,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 
-  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
-      <script src="../../assets/js/html5shiv.js"></script>
-      <script src="../../assets/js/respond.min.js"></script>
-    <![endif]-->
+  
 </head>
 
 <body>
@@ -43,12 +32,72 @@
         background-color: #183552;
         color: #183552;
     }
-    
+body{
+    background:#eee;    
+}
+.main-box.no-header {
+    padding-top: 20px;
+}
+.main-box {
+    background: #FFFFFF;
+    -webkit-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    -moz-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    -o-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    -ms-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    box-shadow: 1px 1px 2px 0 #CCCCCC;
+    margin-bottom: 16px;
+    -webikt-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.table a.table-link.danger {
+    color: #e74c3c;
+}
+.label {
+    border-radius: 3px;
+    font-size: 0.875em;
+    font-weight: 600;
+}
+.user-list tbody td .user-subhead {
+    font-size: 0.875em;
+    font-style: italic;
+}
+.user-list tbody td .user-link {
+    display: block;
+    font-size: 1.25em;
+    padding-top: 3px;
+    margin-left: 60px;
+}
+a {
+    color: #3498db;
+    outline: none!important;
+}
+.user-list tbody td>img {
+    position: relative;
+    max-width: 50px;
+    float: left;
+    margin-right: 15px;
+}
+
+.table thead tr th {
+    text-transform: uppercase;
+    font-size: 0.875em;
+}
+.table thead tr th {
+    border-bottom: 2px solid #e7ebee;
+}
+.table tbody tr td:first-child {
+    font-size: 1.125em;
+    font-weight: 300;
+}
+.table tbody tr td {
+    font-size: 0.875em;
+    vertical-align: middle;
+    border-top: 1px solid #e7ebee;
+    padding: 12px 8px;
+}
 </style>
 <link rel="stylesheet" type="text/css" href="../public/css/custom.css">
-
-
-
 <nav class="navbar navbar-expand-lg nav-custom" style="background-color:#183552; color: #fff">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -57,20 +106,18 @@
     <a class="navbar-brand mr-auto mt-2 mt-lg-0" href="#">BES CHAT</a>
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Görüşme Yap! <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/web">Görüşme Yap! <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal">Rehber</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Çıkış</a>
+        <a class="nav-link" href="/logout">Çıkış</a>
       </li>
     </ul>
   </div>
 </nav>
-
 <div class="container">
-   
   	<hr>
 	<div class="row">
       <!-- left column -->
@@ -78,11 +125,9 @@
         <div class="text-center">
           <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
           <h6>Bir fotoğraf yükle...</h6>
-          
           <input type="file" class="form-control">
         </div>
       </div>
-      
       <!-- edit form column -->
       <div class="col-md-9 personal-info">
         <div class="alert alert-info alert-dismissable">
@@ -90,50 +135,27 @@
           <span class="fa fa-coffee"></span>
           Kullanıcı bilgilerinizi güncelleyebilir ve <strong>rehberinize</strong> yeni kişiler ekleyebilirsiniz.
         </div>
-        
         <form class="form-horizontal" role="form">
           <div class="form-group">
-            <label class="col-lg-3 control-label">Ad:</label>
+            <label class="col-lg-3 control-label">Ad ve Soyadı:</label>
             <div class="col-lg-12">
-              <input class="form-control" type="text" value="Emre">
+              <input class="form-control" type="text" value="<%= user.name %>">
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-3 control-label">Soyad:</label>
+            <label class="col-lg-3 control-label">Kullanıcı Adı:</label>
             <div class="col-lg-12">
-              <input class="form-control" type="text" value="Sakız">
+              <input class="form-control" type="text" value="<%= user.username %>">
             </div>
           </div>
-         
-          <div class="form-group">
-            <label class="col-lg-3 control-label">Eposta:</label>
-            <div class="col-lg-12">
-              <input class="form-control" type="text" value="emresakiz@chat.com">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-lg-3 control-label">Cinsiyet:</label>
-            <div class="col-lg-12">
-              <div class="ui-select">
-                <select id="user_time_zone" class="form-control">
-                  <option value="k">Kadın</option>
-                  <option value="e">Erkek</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-md-3 control-label">Kullanıcı Adı:</label>
-            <div class="col-md-12">
-              <input class="form-control" type="text" value="emresakiz">
-            </div>
-          </div>
+
           <div class="form-group">
             <label class="col-md-3 control-label">Parola:</label>
             <div class="col-md-12">
               <input class="form-control" type="password" value="11111122333">
             </div>
           </div>
+          
           <div class="form-group">
             <label class="col-md-3 control-label">Parola Tekrar:</label>
             <div class="col-md-12">
@@ -150,8 +172,6 @@
   </div>
 </div>
 <hr>
-
-
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -176,15 +196,66 @@
     </div>
   </div>
 </div>
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+<hr>
+<div class="container bootstrap snippet">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="main-box no-header clearfix">
+        <div class="main-box-body clearfix">
+          <div class="table-responsive">
+            <table class="table user-list">
+              <thead>
+                <tr>
+                  <th><span>User</span></th>
+                  <th><span>Created</span></th>
+                  <th class="text-center"><span>Status</span></th>
+                  <th><span>Email</span></th>
+                  <th>&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="">
+                      <a href="#" class="user-link">Full name 1</a>
+                      <span class="user-subhead">Member</span>
+                  </td>
+                  <td>2013/08/12</td>
+                  <td class="text-center">
+                  <span class="label label-default">pending</span>
+                  </td>
+                  <td>
+                    <a href="#">marlon@brando.com</a>
+                  </td>
+                  <td style="width: 20%;">
+                    <a href="#" class="table-link">
+                      <span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                      </span>
+                    </a>
+                    <a href="#" class="table-link danger">
+                      <span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                      </span>
+                    </a>
+                   </td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
-
 <script type="text/javascript">
     $(document).ready(function () {
         var height = $(window).height();
         $('.left-chat').css('height', (height - 92) + 'px');
         $('.right-header-contentChat').css('height', (height - 163) + 'px');
-
-
-
     });
 </script>

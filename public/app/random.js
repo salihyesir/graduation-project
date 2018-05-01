@@ -1,17 +1,14 @@
 (function($) {
-
   var self = {
     id: null,
     partnerId: null,
     username: 'User_'+Math.random().toString(36).substring(4,8)
   };
-  
   // store the DOM elements to use later
   var elMessages = $('#messages_container');
   var elUsers = $('#user_container');
   var elText = $('#message');
   var btnSend = $('#send_btn');
-
   // bind the event listeners
   btnSend.on('click', function() {
     var text = elText.val().trim();
@@ -24,20 +21,16 @@
       addMessage(text, self.id);
     }
   });
-  
   $('#next_btn').on('click', function() {
     hangupCall();
     addMessage('searching...');
     easyrtc.webSocket.emit('next_user');
   });
-  
   $('#stop_btn').on('click', hangupCall);
   
   $('#clear_btn').on('click', function() {
     elMessages.html('');
   });
-
-
   // handle the key events
   elText.on('keypress', function(e) {
     if (e.keyCode == 13 && !e.shiftKey && !btnSend.hasClass('disabled')) {
@@ -45,7 +38,6 @@
       return false;
     }
   });
-
   // will be trigerred on sendPeerMessage() call
   easyrtc.setPeerListener( function(senderId, msgType, msgData, targeting) {
     if( msgType === 'send_peer_msg' ) {
@@ -54,7 +46,6 @@
       disconnectMeFromPartner();
     }
   });
-
   // get the partner video stream - triggered on sucessful call
   easyrtc.setStreamAcceptor( function(callerId, stream) {
     var video = document.getElementById('partnerVideo');
@@ -68,20 +59,8 @@
     video.volume = 0.4;
     easyrtc.setVideoObjectSrc(video, '');
   });
-
-
-
-  
   function connect() {
     //easyrtc.enableDebug(true);
-
-    // if (navigator.userAgent.match(/android/i)) {
-    //   var remote_filter= easyrtc.buildRemoteSdpFilter({audioSendCodec: 'ISAC/16000'});
-    //   log(remote_filter);
-    //   var local_filter= easyrtc.buildLocalSdpFilter({audioRecvCodec: 'opus/48000/2'});
-    //   log(local_filter);
-    //   easyrtc.setSdpFilters(local_filter,remote_filter);
-    // }
 
     easyrtc.setUsername(self.username);
     easyrtc.initMediaSource(
@@ -97,7 +76,6 @@
         console.error('Failed to get your media: '+ errmesg);
       }
     );
-    
     easyrtc.connect('random_app',
       // success callback
       function(socketId) {
@@ -114,8 +92,6 @@
             elUsers.append('<div id='+userList[id].id+'>'+userList[id].name+'</div>');
           }
         });
- 
-
         easyrtc.webSocket.on('connect_partner', function(user) {
           if(user.caller){
             performCall(user.partnerId);
@@ -129,7 +105,6 @@
             disconnectMeFromPartner();
           }
         });
-
         // make the necessary updates on the server side for the new user
         easyrtc.webSocket.emit('init_user', {'name':self.username});
       },
@@ -139,7 +114,6 @@
       }
     );
   }
-
   function addMessage(text, senderId) {
     // Escape html special characters, then add linefeeds.
     var content = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br />');
@@ -147,8 +121,6 @@
       // no sender, informative message only
       elMessages.append('<div><b>' + content + '</b></div>');
     } else {
-
-
         elMessages.append('<div>' + (senderId == self.id ? '<div class="alert alert-dismissible fade show" role="alert" style="font-size:14px;">'+
                 '<strong>Me: </strong>' + content +
         '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
@@ -159,15 +131,10 @@
                 '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
                 '<span aria-hidden="true">&times;</span>'+
                 '</button></div>'));
-
-
-
     }
   }
-
   function performCall(id) {
     connectMeToPartner(id);
-    
     // fill these functions if necessary
     var successCB = function() {};
     var failureCB = function() {
@@ -177,13 +144,11 @@
     var acceptedCB = function(isAccepted, callerId) {};
     easyrtc.call(self.partnerId, successCB, failureCB, acceptedCB);
   }
-
   // auto-accept the call
   easyrtc.setAcceptChecker(function(callerId, callback) {
     //callback(callerId == self.partnerId);
     callback(true);
   });
-  
   function hangupCall() {
     if(self.partnerId) {
       // inform both users that they disconnected
@@ -192,7 +157,6 @@
     }
     easyrtc.hangupAll();
   }
-
   function connectMeToPartner(id) {
     addMessage('Connected');
     // set the partner
@@ -200,7 +164,6 @@
     // enable the button to allow sending messages
     btnSend.removeClass('disabled');
   }
-
   function disconnectMeFromPartner() {
     addMessage('Disconnected');
     // reset the partner
@@ -208,7 +171,6 @@
     // disable the button
     btnSend.addClass('disabled');
   }
-
   // start the process
   connect();
 }(jQuery));
