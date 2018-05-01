@@ -86,11 +86,9 @@
     );
     
     easyrtc.connect('random_app',
-      
       // success callback
       function(socketId) {
         self.id = socketId;
-        console.log("Bağlandım random_app");
         // event listeners to update list of active users
         easyrtc.webSocket.on('ui_user_add', function(userData) {
           elUsers.append('<div id='+userData.id+'>'+userData.name+'</div>');

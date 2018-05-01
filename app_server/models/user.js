@@ -32,22 +32,29 @@ var findOrCreate = function(data, callback){
 		if(user){
 			return callback(err, user);
 		} else {
-			var userData = {
-				username: data.displayName,
-				socialId: data.id,
-				picture: data.photos[0].value || null
-			};
-
-			// To avoid expired Facebook CDN URLs
-			// Request user's profile picture using user id 
-			// @see http://stackoverflow.com/a/34593933/6649553
-			if(data.provider == "facebook" && userData.picture){
-				userData.picture = "http://graph.facebook.com/" + data.id + "/picture?type=large";
-			}
-
-			create(userData, function(err, newUser){
-				callback(err, newUser);
+			findOne({'username': data.displayName},function(err,inf){
+				if(err) { return callback(err); }
+				if(inf){
+					data.displayName= data.displayName + data.id;
+				}
+				var userData = {
+					name: data.displayName,
+					username: data.displayName,
+					socialId: data.id,
+					picture: data.photos[0].value || null
+				};
+	
+				// To avoid expired Facebook CDN URLs
+				// Request user's profile picture using user id 
+				// @see http://stackoverflow.com/a/34593933/6649553
+				if(data.provider == "facebook" && userData.picture){
+					userData.picture = "http://graph.facebook.com/" + data.id + "/picture?type=large";
+				}
+				create(userData, function(err, newUser){
+					callback(err, newUser);
+				});
 			});
+			
 		}
 	});
 }

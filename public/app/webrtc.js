@@ -1,14 +1,16 @@
 var config = {
 	server:"/",
 	
-	app:function(username, picture, directory ){
+	app:function(name,username, picture, directory ){
+		config.name=name;
 		config.name=username;
 		config.picture = picture;
 		config.directory= directory;
 	},
-
 	users:function(room, people, me){
-		console.log(config.directory);
+		console.log(people);
+		console.log('------------');
+		console.log(me);
 		var list = $$("contactsList");
 		list.clearAll();
 		if (config.name)
@@ -19,6 +21,8 @@ var config = {
 
 		for (var key in people){
 			var v = people[key];
+			
+			if(config.directory.indexOf(v.username) > -1 )
 			list.add ({
 				id: v.easyrtcid,
 				img: "/public/img/avatar/man.png",
