@@ -18,13 +18,15 @@
 <body>
 <script>
 document.addEventListener("DOMContentLoaded", function(event) {
-	if('<%= user.socialId  %>')
-		var pic= '<%= user.picture  %>';
-	else
+	if('<%= user.socialId %>' === null)
 		var pic= 'public/'+'<%= user.picture  %>';
-  	config.app('<%= user.name  %>','<%= user.username  %>',pic , '<%= user.directory %>', );
-
-});
+	else
+		var pic= '<%= user.picture  %>';
+	
+	config.app('<%= user.name  %>','<%= user.username  %>',pic , '<%= user.directory %>',  );
+	//config.partner('<%= directory[0].picture %>');
+	
+	});
 </script>
 </body>
 </html>

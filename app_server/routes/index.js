@@ -111,12 +111,21 @@ router.post('/adduser',  [User.isAuthenticated, function(req, res, next){
 	});
 	res.redirect('/');
 }]);
+router.post('/deleteUser',  [User.isAuthenticated, function(req, res, next){
+	
+	console.log(req.body);
+	var str = JSON.stringify(req.body);  
+	var obj = JSON.parse(str);
+	if(req.user.directory.indexOf(obj[0].username) > -1){
+		var query = {$pull: { directory:  obj[0].username } }; 
+		User.findOneAndUpdate(req.user._id, query ,function (err,docs) {
+			if(err) throw err;
+		});
+	}
+	res.redirect('/');
+}]);
 
-function security(temp){
-	
-}
 router.post('/update',  [User.isAuthenticated, function(req, res, next) {
-	
 	var credentials = {'name' : req.body.name ,'username': req.body.username, 
 		'password': req.body.password, 'email' : req.body.email };
 	if( credentials.username === '' || credentials.password === '', credentials.name ==='' ){
@@ -143,15 +152,13 @@ router.get('/random', function(req, res, next) {
 });
 
 router.get('/web',[User.isAuthenticated, function(req, res, next) {
-	var userId = req.user._id;
-	User.findById(userId, function(err, inf){
+	User.find({username: req.user.directory},function (err, result) {
 		if(err) throw err;
-		if(!inf){
-			return next(); 
+		else{
+			res.render('web', { user: req.user , directory: result });
 		}
-		res.render('web', { user: inf });
 	});
-	
+	console.log(req.user);
 }]);
 
 // Logout

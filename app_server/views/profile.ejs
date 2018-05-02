@@ -150,29 +150,36 @@
                 </tr>
               </thead>
               <tbody>
-              <% for( var i=0; i< directory.length; i++){%>
-                <tr>
-                  <td>
-                    <img src="/public<%= directory[i].picture%>">
-                      <p style="color:blue;" class="user-link"><%= directory[i].name %></p>
-                  </td>
-                  <td><p style="color:LightSlateGray;" class="user-link"><%= directory[i].username %></p></td>
-                  <td class="text-center">
-                  <span class="label label-default"><%= directory[i].email%></span>
-                  </td>
+              <% for( var i=0; i< directory.length; i++) {%>
+              <div id='directory[i]._id'>
+                  <tr>
                     <td>
-                    <a href="#" class="table-link danger">
-                      <span class="fa-stack">
-                        <i class="fa fa-square fa-stack-2x"></i>
-                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                      </span>
-                    </a>
-                   </td>
-                  </tr>
-                  <tr>&nbsp;</tr>
-                  <%}%>
-              </tbody>
-            </table>
+                    <% if (!directory[i].socialId) { %>
+                      <img src="/public<%= directory[i].picture%>">
+                    <%}%>
+                    <% if (directory[i].socialId) { %>
+                      <img src="<%= directory[i].picture%>">
+                    <%}%>
+                        <p style="color:blue;" class="user-link"><%= directory[i].name %></p>
+                    </td>
+                    <td><p style="color:LightSlateGray;" class="user-link"><%= directory[i].username %></p></td>
+                    <td class="text-center">
+                    <span class="label label-default"><%= directory[i].email%></span>
+                    </td>
+                      <td>
+                      <a href="" class="table-link danger" onclick="sil('<%= directory[i].username %>');">
+                        <span class="fa-stack">
+                          <i class="fa fa-square fa-stack-2x"></i>
+                          <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                        </span>
+                      </a>
+                    </td>
+                    </tr>
+                    <tr>&nbsp;</tr>
+                    <% } %>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -186,4 +193,15 @@
         $('.left-chat').css('height', (height - 92) + 'px');
         $('.right-header-contentChat').css('height', (height - 163) + 'px');
     });
+     function sil(value){
+          var json = [{"username": value}];
+          var xmlhttp = new XMLHttpRequest();   
+          xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200){
+            }
+          };
+          xmlhttp.open("POST", "/deleteUser");
+          xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+          xmlhttp.send(JSON.stringify(json));
+        }
 </script>
