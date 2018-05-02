@@ -2,7 +2,7 @@ var Mongoose 	= require('mongoose');
 var bcrypt      = require('bcrypt-nodejs');
 
 const SALT_WORK_FACTOR = 10;
-const DEFAULT_USER_PICTURE = "/img/user.jpg";
+const DEFAULT_USER_PICTURE = "/img/avatar/user.jpg";
 
 /**
  * Every user has a username, password, socialId, and a picture.
@@ -20,6 +20,7 @@ var UserSchema = new Mongoose.Schema({
     password: { type: String, default: null },
     socialId: { type: String, default: null },
     picture:  { type: String, default:  DEFAULT_USER_PICTURE},
+    email: { type: String, default:null},
     isDeleted: { type:Boolean, required:true , default:false},
     directory:[ String ]
 });

@@ -1,6 +1,5 @@
 var config = {
 	server:"/",
-	
 	app:function(name,username, picture, directory ){
 		config.name=name;
 		config.name=username;
@@ -14,7 +13,7 @@ var config = {
 			list.add({ 
 				id:-1, 
 				img: config.picture, 
-				title: config.name + " ( this is Me )" });
+				title: config.name + " ( Sen )" });
 		console.log(config.directory);
 		for (var key in people){
 			var v = people[key];
@@ -59,15 +58,15 @@ function doConnect(config) {
 	easyrtc.setUsername (config.name);
 	easyrtc.setRoomOccupantListener(config.users);
 	easyrtc.setSocketUrl(config.server);
-	easyrtc.easyApp("WebixWebRTC", "mirrorVideo", ["windowToUniverse"], function(id){
+	easyrtc.easyApp("FaceTime", "mirrorVideo", ["windowToUniverse"], function(id){
 		config.$userId = id
 	}, function(code){
 
-  		var text = "Connection failed";
-		if(code === "MEDIA_ERR") text += ". Cannot find a local web camera";
-		if(code === "MEDIA_WARNING") text += ". Video width and height are inappropriate";
-		if(code === "SYSTEM_ERR") text += ". Check your network settings";
-		if(code === "ALREADY_CONNECTED") text += ". You are already connected";
+  		var text = "Bağlantı Hatası";
+		if(code === "MEDIA_ERR") text += ". Yerel bir web kamerası bulamıyor";
+		if(code === "MEDIA_WARNING") text += ". Video genişliği ve yüksekliği uygun değil";
+		if(code === "SYSTEM_ERR") text += ". Ağ ayarlarınızı kontrol edin";
+		if(code === "ALREADY_CONNECTED") text += ". Zaten bağlısınız ";
 
 		webix.message({ type:"error", text: text});
 		
@@ -77,7 +76,7 @@ function doConnect(config) {
 		if ($$("endcall").isVisible()){
 			$$("endcall").hide();
 			$$("status").setValue("");
-			webix.message("You were disconnected");
+			webix.message("Bağlantınız kesildi");
 		}
 	});	
 	easyrtc.setAcceptChecker( function(caller, cb) {
@@ -93,16 +92,15 @@ function doConnect(config) {
         };
 
         if( easyrtc.getConnectionCount() > 0 )
-        	webix.confirm({ text:"Drop the current call and accept the new one from " + name + " ?", callback });
+        	webix.confirm({ text:" Mevcut aramayı bırak ve yeni olan aramayı kabul et " + name + " ?", callback });
         else
-            webix.confirm({ text: "Accept an incoming call from " + name + " ?", callback });
+            webix.confirm({ text: "Gelen çağrıyı kabul et " + name + " ?", callback });
 
     });
 }
 
 function doCall(easyrtcid) {
 	if (easyrtcid < 0) return false;
-	// Arama yapıldığında kendi sesimi kısıyorum. kendi pcmde test ederken yankı yapıyor.
 	
 	$$("status").setValue("Connecting...")
 	easyrtc.call(
@@ -118,7 +116,7 @@ function doCall(easyrtcid) {
 		},
 		function(accepted, caller) {
 			if (!accepted){
-				webix.message(easyrtc.idToName(caller)+" has rejected your call");
+				webix.message(easyrtc.idToName(caller)+" aramanızı reddetti");
 				$$("status").setValue("");
 			}
 		}

@@ -49,14 +49,14 @@
   // get the partner video stream - triggered on sucessful call
   easyrtc.setStreamAcceptor( function(callerId, stream) {
     var video = document.getElementById('partnerVideo');
-    video.volume = 0.4;
+    video.volume = 0.6;
     easyrtc.setVideoObjectSrc(video,stream);
   });
   
   // stop to receive the partner video stream - triggered on hangup call
   easyrtc.setOnStreamClosed( function (callerId) {
     var video = document.getElementById('partnerVideo');
-    video.volume = 0.4;
+    video.volume = 0.6;
     easyrtc.setVideoObjectSrc(video, '');
   });
   function connect() {
