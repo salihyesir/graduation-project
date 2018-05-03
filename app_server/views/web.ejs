@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		xmlhttp = new XMLHttpRequest();   
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200){
-			console.log(id);
 			var list = document.getElementById(id);
 			list.getElementsByTagName("img")[0].src = this.responseText +"";
 			

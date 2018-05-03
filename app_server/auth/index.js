@@ -36,13 +36,13 @@ var init = function(){
 	      if (err) { return done(err); }
 
 	      if (!user) {
-	        return done(null, false, { message: 'Incorrect username or password.' });
+	        return done(null, false, { message: 'Kullanıcı adı veya şifre yanlış' });
 	      }
 
 	      user.validatePassword(password, function(err, isMatch) {
 	        	if (err) { return done(err); }
 	        	if (!isMatch){
-	        		return done(null, false, { message: 'Incorrect username or password.' });
+	        		return done(null, false, { message: 'Kullanıcı adı veya şifre yanlış.' });
 	        	}
 	        	return done(null, user);
 	      });

@@ -18,7 +18,6 @@ var config = {
 			var v = people[key];
 			if(config.directory.indexOf(v.username) > -1 ){
 				var temp = reqpicture(v.username ,v.easyrtcid);
-				console.log(v.easyrtcid); 
 				list.add ({
 					id: v.easyrtcid,
 					img: 'public/img/call.jpg',
@@ -104,7 +103,7 @@ function doConnect(config) {
 function doCall(easyrtcid) {
 	if (easyrtcid < 0) return false;
 	
-	$$("status").setValue("Connecting...")
+	$$("status").setValue("Arıyor...")
 	easyrtc.call(
 		easyrtcid,
 		function(caller) { 
@@ -120,8 +119,11 @@ function doCall(easyrtcid) {
 		},
 		function(accepted, caller) {
 			if (!accepted){
-				webix.message(easyrtc.idToName(caller)+" aramanızı reddetti");
+				var temp = easyrtc.idToName(caller);
+				webix.message(temp +" aramanızı reddetti");
 				$$("status").setValue("");
+				reqpicture(temp, easyrtcid);
+				$$("contactsList").unselectAll();
 			}
 		}
 	);
@@ -135,11 +137,12 @@ webix.ready(function(){
 				{ view:"label", label : "WebRTC Chat" },
 				{},
 				{ view:"label", id:"status", css:"status", value:"", width: 200 },
-				{ view:"button", id:"endcall", value:"End Call", width: 100, click:function(){
+				{ view:"button", id:"endcall", value:"Sonlandır", width: 100, click:function(){
 					$$("endcall").hide();
 					easyrtc.hangupAll();
 					$$("contactsList").unselectAll()
 					$$("status").setValue("");
+					location.reload(false);
 				}, hidden:true }
 			]},
 			{ cols :[
