@@ -51,13 +51,12 @@
         <div class="text-center">
         <% if (!user.socialId) { %>
             <img src="/public<%= user.picture %>" class="avatar img-circle" alt="avatar">
-        <%}%>
-        <% if (user.socialId) { %>
+        <% } if (user.socialId) { %>
             <img src="<%= user.picture %>" class="avatar img-circle" alt="avatar">
-        <%}%>
+        <% } %>
         </div>
       </div>
-      <!-- edit form column -->
+
       <div class="col-md-9 personal-info">
         <div class="alert alert-info alert-dismissable">
           <a class="panel-close close" data-dismiss="alert">×</a> 
@@ -90,12 +89,13 @@
               <input class="form-control" type="password"  name="password" id="password" value="">
             </div>
           </div>
-          <%}%>
+          <% } %>
           <div class="form-group">
             <label class="col-md-3 control-label"></label>
             <div class="col-md-8">
               <input type="submit" class="btn btn-primary" value="Kaydet">
           </div>
+          
         </form>
       </div>
   </div>
@@ -204,4 +204,5 @@
           xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
           xmlhttp.send(JSON.stringify(json));
         }
+        
 </script>

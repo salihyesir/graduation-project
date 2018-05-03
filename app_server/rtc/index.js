@@ -79,7 +79,7 @@ var init = function(app){
         cert: fs.readFileSync(path.join(__dirname, '../../private/server.crt'))
     },app);
     var io = require('socket.io')(webServer,{"log level":1});
-    //easyrtc.setOption("logLevel", "debug");    
+    easyrtc.setOption("logLevel", "debug");    
     //var easyrtcServer = easyrtc.listen(app, io, {'apiEnable':'true'});
 
         // Start EasyRTC server

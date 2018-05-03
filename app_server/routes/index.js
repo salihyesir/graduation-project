@@ -31,7 +31,7 @@ router.post('/login', passport.authenticate('local', {
 router.post('/register', function(req, res, next) {
 	var credentials = {'name' : req.body.name ,'username': req.body.username, 'password': req.body.password };
 	if( credentials.username === '' || credentials.password === '', credentials.name ==='' ){
-		req.flash('error', 'Missing credentials');
+		req.flash('error', 'Eksik kimlik bilgileri');
 		req.flash('showRegisterForm', true);
 		res.redirect('/');
 	}else{
@@ -39,13 +39,13 @@ router.post('/register', function(req, res, next) {
 		User.findOne({'username': new RegExp('^' + req.body.username + '$', 'i'), 'socialId': null}, function(err, user){
 			if(err) throw err;
 			if(user){
-				req.flash('error', 'Username already exists.');
+				req.flash('error', 'Kullanıcı adı zaten var.');
 				req.flash('showRegisterForm', true);
 				res.redirect('/');
 			}else{
 				User.create(credentials, function(err, newUser){
 					if(err) throw err;
-					req.flash('success', 'Your account has been created. Please log in.');
+					req.flash('success', ' Kayıt Başarılı Lütfen Oturum Açın');
 					res.redirect('/');
 				});
 			}
@@ -97,10 +97,10 @@ router.post('/adduser',  [User.isAuthenticated, function(req, res, next){
 	User.find({username:adduser},function (err, result) {
 		if(err) throw err;
 		if(result.length === 0){
-			req.flash('error', 'User not found.');
+			console.log ('Böyle bir kullanıcı yok');
 		}
 		else if(req.user.directory.indexOf(adduser) > -1){
-			req.flash('error', 'User already exist.');
+			console.log ('Kullanıcı zaten kayıtlı.');
 		}
 		else{
 			var query = {$push: { directory:  adduser } }; 
@@ -112,8 +112,6 @@ router.post('/adduser',  [User.isAuthenticated, function(req, res, next){
 	res.redirect('/');
 }]);
 router.post('/deleteUser',  [User.isAuthenticated, function(req, res, next){
-	
-	console.log(req.body);
 	var str = JSON.stringify(req.body);  
 	var obj = JSON.parse(str);
 	if(req.user.directory.indexOf(obj[0].username) > -1){
@@ -125,12 +123,31 @@ router.post('/deleteUser',  [User.isAuthenticated, function(req, res, next){
 	res.redirect('/');
 }]);
 
+router.post('/reqpicture',  [User.isAuthenticated, function(req, res, next) {
+	var str = JSON.stringify(req.body);  
+	var obj = JSON.parse(str);
+	if(req.user.directory.indexOf(obj[0].username) > -1){
+		User.find({username:obj[0].username},function (err,result) {
+			if(err) throw err;
+			else
+			{
+				var temp;
+				if(result[0].picture.length < 30 ){
+					temp = 'public' + result[0].picture;
+				}
+				else
+					temp = result[0].picture;
+				res.send( temp );
+			}
+		});
+	}
+}]);
+
 router.post('/update',  [User.isAuthenticated, function(req, res, next) {
 	var credentials = {'name' : req.body.name ,'username': req.body.username, 
 		'password': req.body.password, 'email' : req.body.email };
 	if( credentials.username === '' || credentials.password === '', credentials.name ==='' ){
-		req.flash('error', 'Missing credentials');
-		req.flash('showRegisterForm', true);
+		console.log( 'Eksik Bilgiler');
 	}
 	else{
 		bcrypt.genSalt(10, function(err, salt) {
@@ -140,25 +157,19 @@ router.post('/update',  [User.isAuthenticated, function(req, res, next) {
 				credentials.password = hash;
 				User.findOneAndUpdate(req.user._id, credentials ,function (err,docs) {
 					if(err) throw err;
-					console.log(docs);
 				});
 			});
 		});
 	}
 	res.redirect('/');
 }]);
+
 router.get('/random', function(req, res, next) {
 	res.render('random');
 });
 
 router.get('/web',[User.isAuthenticated, function(req, res, next) {
-	User.find({username: req.user.directory},function (err, result) {
-		if(err) throw err;
-		else{
-			res.render('web', { user: req.user , directory: result });
-		}
-	});
-	console.log(req.user);
+	res.render('web', { user: req.user  });
 }]);
 
 // Logout

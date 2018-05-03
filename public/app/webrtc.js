@@ -14,14 +14,14 @@ var config = {
 				id:-1, 
 				img: config.picture, 
 				title: config.name + " ( Sen )" });
-		console.log(config.directory);
 		for (var key in people){
 			var v = people[key];
 			if(config.directory.indexOf(v.username) > -1 ){
-				console.log(config.directory.indexOf(v.username));
+				var temp = reqpicture(v.username ,v.easyrtcid);
+				console.log(v.easyrtcid); 
 				list.add ({
 					id: v.easyrtcid,
-					img: "/public/img/avatar/man.png",
+					img: 'public/img/call.jpg',
 					title: v.username
 				});
 			}
@@ -34,9 +34,11 @@ var contactsList = {
 	view : "list",
 	id : "contactsList",
 	template : `
-		<div class='contactPaneDiv'>
-			<img class="contactIcon" src="#img#"/>
-			<span class="contactTextDiv">#title#</span>
+		<div id="#id#">
+			<div class='contactPaneDiv'>
+				<img class="contactIcon" src="#img#"/>
+				<span class="contactTextDiv">#title#</span>
+			</div>
 		</div>
 	`,
 	item : {
@@ -107,7 +109,9 @@ function doCall(easyrtcid) {
 		easyrtcid,
 		function(caller) { 
 			$$("endcall").show();
-			$$("status").setValue(easyrtc.idToName(caller));
+			var temp=easyrtc.idToName(caller)
+			$$("status").setValue(temp);
+			reqpicture(temp, easyrtcid);
 		},
 		function(errorMessage) { 
 			webix.message({
@@ -147,3 +151,4 @@ webix.ready(function(){
 	doConnect(config);
 
 });
+

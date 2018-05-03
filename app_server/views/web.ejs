@@ -16,17 +16,33 @@
 	
 </head>
 <body>
+</body>
 <script>
 document.addEventListener("DOMContentLoaded", function(event) {
-	if('<%= user.socialId %>' === null)
-		var pic= 'public/'+'<%= user.picture  %>';
-	else
-		var pic= '<%= user.picture  %>';
-	
-	config.app('<%= user.name  %>','<%= user.username  %>',pic , '<%= user.directory %>',  );
-	//config.partner('<%= directory[0].picture %>');
-	
+
+	var pic= '<%= user.picture  %>';
+	if(pic.length < 30){
+		var pic ='/public' + pic ;
+	}
+
+	config.app('<%= user.name  %>','<%= user.username  %>',pic , '<%= user.directory %>'  );
 	});
+
+	function reqpicture(value, id){
+		var json = [{"username": value}];
+		var xmlhttp;
+		xmlhttp = new XMLHttpRequest();   
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200){
+			console.log(id);
+			var list = document.getElementById(id);
+			list.getElementsByTagName("img")[0].src = this.responseText +"";
+			
+			}
+		};
+		xmlhttp.open("POST", "/reqpicture");
+		xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		xmlhttp.send(JSON.stringify(json));
+};
 </script>
-</body>
 </html>
